@@ -1,0 +1,8 @@
+C:\Web\Mediathek\DataAccessStore\bin\Debug\DataAccessStore.dll
+C:\Web\Mediathek\DataAccessStore\bin\Debug\DataAccessStore.pdb
+C:\Web\Mediathek\DataAccessStore\bin\Debug\DatenbankClass.dll
+C:\Web\Mediathek\DataAccessStore\bin\Debug\DatenbankClass.pdb
+C:\Web\Mediathek\DataAccessStore\obj\Debug\DataAccessStore.csprojResolveAssemblyReference.cache
+C:\Web\Mediathek\DataAccessStore\obj\Debug\DataAccessStore.dll
+C:\Web\Mediathek\DataAccessStore\obj\Debug\DataAccessStore.pdb
+C:\Web\Mediathek\DataAccessStore\bin\Debug\DataAccessStore.dll.config

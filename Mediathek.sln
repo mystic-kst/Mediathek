@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessStore", "DataAccessStore\DataAccessStore.csproj", "{B0714DD5-CFEB-43C1-91D9-F1A441A8DBC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenbankClass", "DatenbankClass\DatenbankClass.csproj", "{85FD901A-9C7A-4457-A3BD-AB3959026DCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediathekMvc", "MediathekMvc\MediathekMvc.csproj", "{26754AC6-FFE0-45CE-9276-7395D3FC2897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediathekConsole", "MediathekConsole\MediathekConsole.csproj", "{33A2B0AA-E19F-4FCB-93D5-22D27F77FB35}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs11
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = DataAccessStore\\DataAccessStore.csproj
+		SccProjectName1 = DataAccessStore
+		SccLocalPath1 = DataAccessStore
+		SccProjectUniqueName2 = DatenbankClass\\DatenbankClass.csproj
+		SccProjectName2 = DatenbankClass
+		SccLocalPath2 = DatenbankClass
+		SccProjectUniqueName3 = MediathekMvc\\MediathekMvc.csproj
+		SccProjectName3 = MediathekMvc
+		SccLocalPath3 = MediathekMvc
+		SccProjectUniqueName4 = MediathekConsole\\MediathekConsole.csproj
+		SccProjectName4 = MediathekConsole
+		SccLocalPath4 = MediathekConsole
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0714DD5-CFEB-43C1-91D9-F1A441A8DBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0714DD5-CFEB-43C1-91D9-F1A441A8DBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0714DD5-CFEB-43C1-91D9-F1A441A8DBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0714DD5-CFEB-43C1-91D9-F1A441A8DBC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85FD901A-9C7A-4457-A3BD-AB3959026DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85FD901A-9C7A-4457-A3BD-AB3959026DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85FD901A-9C7A-4457-A3BD-AB3959026DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85FD901A-9C7A-4457-A3BD-AB3959026DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26754AC6-FFE0-45CE-9276-7395D3FC2897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26754AC6-FFE0-45CE-9276-7395D3FC2897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26754AC6-FFE0-45CE-9276-7395D3FC2897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26754AC6-FFE0-45CE-9276-7395D3FC2897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A2B0AA-E19F-4FCB-93D5-22D27F77FB35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A2B0AA-E19F-4FCB-93D5-22D27F77FB35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A2B0AA-E19F-4FCB-93D5-22D27F77FB35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A2B0AA-E19F-4FCB-93D5-22D27F77FB35}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

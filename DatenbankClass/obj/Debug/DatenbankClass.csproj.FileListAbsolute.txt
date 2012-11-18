@@ -1,0 +1,4 @@
+C:\Web\Mediathek\DatenbankClass\bin\Debug\DatenbankClass.dll
+C:\Web\Mediathek\DatenbankClass\bin\Debug\DatenbankClass.pdb
+C:\Web\Mediathek\DatenbankClass\obj\Debug\DatenbankClass.dll
+C:\Web\Mediathek\DatenbankClass\obj\Debug\DatenbankClass.pdb

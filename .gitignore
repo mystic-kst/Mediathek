@@ -1,0 +1,40 @@
+$ cat .gitignore
+
+# Can ignore specific files
+Mediathek.7.1.ReSharper.user
+
+
+# Use wildcards as well
+#*~
+#*.swp
+_notes
+
+# Can also ignore all directories and files in a directory. 
+_ReSharper*/*
+_ReSharper*/**/*
+
+$tf/
+
+Mediathek/Mediathek.Publish.xml
+Mediathek.sln.docstates.suo
+Mediathek/obj/**/*
+Mediathek/bin/Mediathek.*
+
+Mediathek.Tests/bin/**/*
+Mediathek.Tests/obj/**/*
+
+MediathekConsole/Mediathek.Publish.xml
+MediathekConsole/obj/**/*
+MediathekConsole/bin/Mediathek.*
+MediathekConsole/App_Data/*.ldf
+
+MediathekMvc/Mediathek.Publish.xml
+MediathekMvc/obj/**/*
+MediathekMvc/bin/Mediathek.*
+MediathekMvc/App_Data/*.ldf
+
+DataAccessStore/Mediathek.Publish.xml
+DataAccessStore/bin/Mediathek.*
+
+DatenbankClass/Mediathek.Publish.xml
+DatenbankClass/bin/Mediathek.*
