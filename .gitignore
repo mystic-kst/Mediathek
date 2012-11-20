@@ -40,9 +40,8 @@ DatenbankClass/Mediathek.Publish.xml
 DatenbankClass/bin/Mediathek.*
 
 *.ncrunchsolution**
-*/bin/Debug/*.dll
-*/bin/Debug/*.dll.config
-*/bin/Debug/*.pdb
 */bin/Debug/*.**
 */obj/Debug/*.**
+
+*/bin/*.**
 
