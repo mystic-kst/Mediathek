@@ -38,3 +38,10 @@ DataAccessStore/bin/Mediathek.*
 
 DatenbankClass/Mediathek.Publish.xml
 DatenbankClass/bin/Mediathek.*
+
+*.ncrunchsolution**
+*/bin/Debug/*.**
+*/obj/Debug/*.**
+
+*/bin/*.**
+
