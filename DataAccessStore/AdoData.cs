@@ -10,18 +10,32 @@ using System.Data.SqlClient;
 namespace DataAccessStore
 {
 	public class Song
-	{ }
+	{
+        public Guid songID;
+        public string songtitle;
+        public Guid albumID;
+    }
 
 	public class Album
 	{
-		// Bemerkung KST:
-		// wir werden die Id's als String definieren um bzgl. der Datenbankanbindung flexibl zu sein
-		//   - kannst du dich an die Ausführung von Dirk bzgl. uiid errinnern...
+		
+        public Album() {}
+        public Album(string Interpret, string Title, string Genre)
+        {
+            interpret = Interpret;
+            title = Title;
+            genre = Genre;
+        }
+        
+        public Guid albumID;
+		public string interpret;
+		public string title;
+		public string genre;
+        public string imagepath;
+        public int datum ;
+        public List<Song> Songs;
 
-		public string albumId;
-		public string interpretId;
-		public string title = "";
-		public string genre = "";
+        
 	}
 
 	public class AdoData : IDataInterface
@@ -29,7 +43,7 @@ namespace DataAccessStore
 		public List<Album> GetAllAlbum()
 		{
 			//SQL Abfrage
-			string sql = "Select * from  Album";
+			string sql = "Select *  from  Album";
 
 			//Datenbankverbindung
 			SqlConnection connection = DatenbankClass.Verbindung.GetSqlConnection();
@@ -40,7 +54,7 @@ namespace DataAccessStore
 
 				//Kommando ausführen
 				SqlDataReader reader = cmd.ExecuteReader();
-
+                
 				//In dieser Methode wird anhand des Readers eine Liste von Albums erzeugt.
 
 				return GetAlbumsFromReader(reader);
@@ -48,7 +62,7 @@ namespace DataAccessStore
 			catch (SqlException ex)
 			{
 
-				throw new DataAccessException("Die Songs konnten nicht ausgelesen werden.", ex);
+				throw new DataAccessException("Die Alben konnten nicht ausgelesen werden.", ex);
 
 			}
 
@@ -74,19 +88,21 @@ namespace DataAccessStore
 
 			//Alle Zeilen der Ergebnismenge durchlaufen.
 			while (reader.Read())
-			{
-				//Alle Spalten in einer Zeile der Ergebnismenge durchlaufen
+			{				
 				Album album = new Album();
+                //Alle Spalten in einer Zeile der Ergebnismenge durchlaufen
 				for (int i = 0; i < reader.FieldCount; i++)
 				{
+                    var test = reader.GetName(i).ToLower();
 					switch (reader.GetName(i).ToLower())
-					{
-						case "albumId":
-							album.albumId = reader.IsDBNull(i) ? null : reader.GetString(i);
+					{  
+                         
+						case "albumid":
+                            album.albumID = reader.GetGuid(i);
 							break;
-						case "interpretID":
-							album.interpretId = reader.IsDBNull(i) ? null : reader.GetString(i);
-							break;
+                        case "interpret":
+                            album.interpret = reader.IsDBNull(i) ? null : reader.GetString(i);
+                            break;
 						case "title":
 							//Die Tabelle erlaubt für diese Spalte auch Nullwerte,                             
 							album.title = reader.IsDBNull(i) ? null : reader.GetString(i);
@@ -95,6 +111,14 @@ namespace DataAccessStore
 							//Die Tabelle erlaubt für diese Spalte auch Nullwerte
 							album.genre = reader.IsDBNull(i) ? null : reader.GetString(i);
 							break;
+                        case "imagepath":
+                            album.imagepath = reader.IsDBNull(i) ? null : reader.GetString(i);
+                            break;
+                        case "datum":
+                            //album.datum = reader.IsDBNull(i) ? null : reader.GetInt32(i);  // !!! Fehler
+                            //album.datum = reader[i].GetType() != typeof(DBNull) ? reader.GetInt32(i): 0;
+                            album.datum = reader.IsDBNull(i) ? 0 : (int)reader.GetInt32(i);
+                            break;
 					}
 				}
 				list.Add(album);
@@ -107,29 +131,31 @@ namespace DataAccessStore
 
 		public  void SaveAlbum(Album album)
 		{
-			// Bemerkung KST:
-			// <= 0 ?????
+			
 			// da albumId auf string umgestellt wurde, bitte entsprechend implementieren !!!
 
-			//if (album.albumId <= 0)
-			//{
-			//	InsertAlbum(album);
-			//}
-			//else
-			//{
-			//	DeleteAlbum(album);
-			//}
+            //if (album.albumID != String.Empty)
+            //{
+            //    InsertAlbum(album);
+            //}
+            //else
+            //{
+            //    DeleteAlbum(album);
+            //}
 		}
 
 		public  void UpdateAlbum(Album album)
 		{
-			string sql = "UPDATE Album SET title=@title, genre=@description WHERE id=@id";
+            string sql = "UPDATE Album SET interpret=@interpret, title=@title, genre=@genre, datum=@datum WHERE albumID=@albumid";
 			SqlConnection connection = DatenbankClass.Verbindung.GetSqlConnection();
 
 			SqlCommand cmd = new SqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("interpret", album.interpret);
 			cmd.Parameters.AddWithValue("title", album.title);
 			cmd.Parameters.AddWithValue("genre", album.genre);
-			cmd.Parameters.AddWithValue("id", album.albumId);
+            //cmd.Parameters.AddWithValue("imagePath", album.imagepath);
+            cmd.Parameters.AddWithValue("datum", album.datum);
+            cmd.Parameters.AddWithValue("albumid", album.albumID);
 
 			try
 			{
@@ -138,7 +164,7 @@ namespace DataAccessStore
 			}
 			catch (SqlException e1)
 			{
-				throw new DataAccessException("Fehler beim Auslesen der Albumdaten.", e1);
+				throw new DataAccessException(this,"Fehler beim Auslesen der Albumdaten.", e1);
 			}
 			finally
 			{
@@ -152,14 +178,17 @@ namespace DataAccessStore
 
 		 public void InsertAlbum(Album album)
 		{
-			string sql = @"INSERT INTO Album(title, genre) 
-                            VALUES(@title, @genre)";
+			string sql = @"INSERT INTO Album(interpret, title, genre, imagepath, datum) 
+                            VALUES(@interpret, @title, @genre, @imagepath, @datum)";
 
 			SqlConnection connection = DatenbankClass.Verbindung.GetSqlConnection();
 
 			SqlCommand cmd = new SqlCommand(sql, connection);
-			cmd.Parameters.AddWithValue("title", String.IsNullOrEmpty(album.title) ? string.Empty : album.title);
+            cmd.Parameters.AddWithValue("interpret", String.IsNullOrEmpty(album.genre) ? string.Empty : album.interpret);
+			cmd.Parameters.AddWithValue("title", String.IsNullOrEmpty(album.title) ? string.Empty : album.title);            
 			cmd.Parameters.AddWithValue("genre", String.IsNullOrEmpty(album.genre) ? string.Empty : album.genre);
+            cmd.Parameters.AddWithValue("imagepath", String.IsNullOrEmpty(album.imagepath) ? string.Empty : album.imagepath);
+            cmd.Parameters.AddWithValue("datum", album.datum);
 
 			try
 			{
@@ -168,7 +197,7 @@ namespace DataAccessStore
 			}
 			catch (SqlException e1)
 			{
-//				throw new DataAccessException(this, "Fehler beim Speichern der Albumdaten.", e1);
+				throw new DataAccessException(this, "Fehler beim Speichern der Albumdaten.", e1);
 			}
 			finally
 			{
@@ -183,10 +212,11 @@ namespace DataAccessStore
 
 		 public void DeleteAlbum(Album album)
 		{
-			string sql = @"DELETE FROM Album WHERE albumId=@albumId";
+			string sql = @"DELETE Album WHERE albumID=@albumid";
+            
 			SqlConnection connection = DatenbankClass.Verbindung.GetSqlConnection();
 			SqlCommand cmd = new SqlCommand(sql, connection);
-			cmd.Parameters.AddWithValue("albumId", album.albumId);
+			cmd.Parameters.AddWithValue("albumid", album.albumID);
 
 			try
 			{
@@ -195,7 +225,7 @@ namespace DataAccessStore
 			}
 			catch (SqlException e1)
 			{
-				throw new DataAccessException("Fehler beim Auslesen der Albumdaten.", e1);
+				throw new DataAccessException("Fehler beim Löschen der Albumdaten.", e1);
 			}
 			finally
 			{
@@ -206,6 +236,110 @@ namespace DataAccessStore
 			}
 
 		}
+
+         public List<Song> GetSongsFromAlbum()
+         {
+             //SQL Abfrage
+             string sql = "Select * from Song";
+                 
+
+             //Datenbankverbindung
+             SqlConnection connection = DatenbankClass.Verbindung.GetSqlConnection();
+             SqlCommand cmd = new SqlCommand(sql, connection);
+             try
+             {
+                 connection.Open();
+
+                 //Kommando ausführen
+                 SqlDataReader reader = cmd.ExecuteReader();
+
+                 //In dieser Methode wird anhand des Readers eine Liste von Albums erzeugt.
+
+                 return GetSongsFromReader(reader);
+             }
+             catch (SqlException ex)
+             {
+
+                 throw new DataAccessException("Die Songs konnten nicht ausgelesen werden.", ex);
+
+             }
+
+             finally
+             {
+                 if (connection.State != System.Data.ConnectionState.Closed)
+                 {
+                     connection.Close();
+
+                 }
+             }
+         }
+
+         private List<Song> GetSongsFromReader(SqlDataReader reader)
+            {
+ 	            List<Song> songlist = new List<Song>();
+
+			    if (reader == null || !reader.HasRows)
+			    {
+				    return songlist; //leere Liste zurückgeben
+			    }
+
+			    //Alle Zeilen der Ergebnismenge durchlaufen.
+			    while (reader.Read())
+			    {				
+				Song song = new Song();
+                //Alle Spalten in einer Zeile der Ergebnismenge durchlaufen
+				    for (int i = 0; i < reader.FieldCount; i++)
+				    {
+					    switch (reader.GetName(i).ToLower())
+					    {  
+                         
+						case "songid":
+                            song.songID = reader.GetGuid(i);
+							break;
+                        case "albumid":
+                            song.albumID = reader.GetGuid(i);
+                            break;
+						case "songtitle":
+							//Die Tabelle erlaubt für diese Spalte auch Nullwerte,                             
+							song.songtitle = reader.IsDBNull(i) ? null : reader.GetString(i);
+							break;
+					    }
+				    }
+				songlist.Add(song);
+			    }
+			return songlist;
+            }
+
+         public void AlbumSongs(Album album)
+         {
+             string sql = "";
+             SqlConnection connection = DatenbankClass.Verbindung.GetSqlConnection();
+
+             SqlCommand cmd = new SqlCommand(sql, connection);
+             cmd.Parameters.AddWithValue("interpret", album.interpret);
+             cmd.Parameters.AddWithValue("title", album.title);
+             cmd.Parameters.AddWithValue("genre", album.genre);
+             cmd.Parameters.AddWithValue("albumid", album.albumID);
+
+             try
+             {
+                 cmd.Connection.Open();
+                 cmd.ExecuteNonQuery();
+             }
+             catch (SqlException e1)
+             {
+                 throw new DataAccessException(this, "Fehler beim Auslesen der Songdaten.", e1);
+             }
+             finally
+             {
+                 if (cmd.Connection.State != System.Data.ConnectionState.Closed)
+                 {
+                     cmd.Connection.Close();
+                 }
+             }
+
+         }
+         
 
 
 
